@@ -1,0 +1,6 @@
+framework module Pods_TwitterApp_tvOS {
+  umbrella header "Pods-TwitterApp-tvOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
