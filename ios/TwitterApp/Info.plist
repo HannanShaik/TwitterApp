@@ -29,7 +29,7 @@
 			<string>Twitter</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>HannanTwitterApp</string>
+				<string>hannantwitterapp</string>
 			</array>
 		</dict>
 	</array>

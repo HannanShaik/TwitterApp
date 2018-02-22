@@ -1,5 +1,7 @@
 const colors = {
-  background: '#1F0808',
+  background: '#fff',
+  appHeaderColor: '#f2f2f2',
+  appHeadertitleColor: '#e73536',
   clear: 'rgba(0,0,0,0)',
   facebook: '#3b5998',
   transparent: 'rgba(0,0,0,0)',
