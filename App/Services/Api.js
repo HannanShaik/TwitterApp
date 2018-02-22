@@ -38,7 +38,7 @@ const create = (baseURL = 'https://api.twitter.com/1.1') => {
     params.status = message
     const queryParam = queryString.stringify(params);
     const tweetEndpoint = `${baseURL}/statuses/update.json?${queryParam}`
-    return manager.makeRequest(TWITTER, encodeURI(tweetEndpoint), {
+    return manager.makeRequest(TWITTER, tweetEndpoint, {
       method: 'post'
     })
   }

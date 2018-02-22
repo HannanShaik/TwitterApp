@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
-// Add Actions - replace 'Your' with whatever your reducer is called :)
-// import YourActions from '../Redux/YourRedux'
 import TweetActions from '../Redux/TweetRedux';
 import TweetInput from '../Components/TweetInput';
 
@@ -10,10 +8,6 @@ import TweetInput from '../Components/TweetInput';
 import styles from './Styles/HomeScreenStyle'
 
 class HomeScreen extends Component {
-  // constructor (props) {
-  //   super(props)
-  //   this.state = {}
-  // }
 
   componentWillMount() {
     this.props.fetchTimeline();
@@ -27,7 +21,7 @@ class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         <TweetInput
-        />
+          onSubmit={this.props.tweet} />
       </View>
     )
   }
