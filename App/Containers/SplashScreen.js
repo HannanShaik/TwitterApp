@@ -10,7 +10,7 @@ class SplashScreen extends Component {
     AsyncStorage.getItem(ACCESS_TOKEN)
       .then((accessToken) => {
         if (accessToken) {
-          this.props.navigation.navigate('LaunchScreen')
+          this.props.navigation.navigate('HomeScreen')
         } else {
           this.props.navigation.navigate('LoginScreen')
         }

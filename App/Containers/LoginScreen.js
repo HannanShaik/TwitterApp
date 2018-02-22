@@ -11,7 +11,7 @@ class LoginScreen extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.accessToken) {
       AsyncStorage.setItem(ACCESS_TOKEN, nextProps.accessToken);
-      this.props.navigation.navigate('LaunchScreen');
+      this.props.navigation.navigate('HomeScreen');
     } else {
       Alert.alert(
         'Login Failed',

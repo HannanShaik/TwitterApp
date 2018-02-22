@@ -5,7 +5,7 @@ import OAuthManager from 'react-native-oauth'
 
 const TWITTER = 'twitter';
 
-const create = (baseURL = 'https://api.twitter.com/1.1/') => {
+const create = (baseURL = 'https://api.twitter.com/1.1') => {
 
   const config = {
     twitter: {
@@ -23,8 +23,16 @@ const create = (baseURL = 'https://api.twitter.com/1.1/') => {
   }
 
   const fetchTimeline = () => {
-    const timelineEndpoint = `${BASE_URL}statuses/user_timeline.json`
+    const timelineEndpoint = `${BASE_URL}/statuses/user_timeline.json`
     return manager.makeRequest(TWITTER, timelineEndpoint)
+  }
+
+  const tweet = (message) => {
+    const tweetEndpoint = `${BASE_URL}/statuses/update.json`
+    return manager.makeRequest(TWITTER, tweetEndpoint, {
+      method: 'post',
+      params: { status: 'Testing Twitter Status Update' }
+    })
   }
 
   return {
