@@ -32,7 +32,8 @@ const metrics = {
   textSize: {
     small: 12,
     medium: 14,
-    large: 16
+    large: 16,
+    huge: 24,
   }
 }
 

@@ -1,38 +1,45 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, Button } from 'react-native'
+import { View, Text, Button, AsyncStorage } from 'react-native'
 import AppHeader from '../Components/AppHeader'
-
+import { ACCESS_TOKEN } from '../Config/Constants';
 import { connect } from 'react-redux'
 import LoginActions from '../Redux/LoginRedux';
-
-// Add Actions - replace 'Your' with whatever your reducer is called :)
-// import YourActions from '../Redux/YourRedux'
-
-// Styles
 import styles from './Styles/LoginScreenStyle'
 
 class LoginScreen extends Component {
-  // constructor (props) {
-  //   super(props)
-  //   this.state = {}
-  // }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.accessToken) {
+      AsyncStorage.setItem(ACCESS_TOKEN, nextProps.accessToken);
+      this.props.navigation.navigate('LaunchScreen');
+    } else {
+      Alert.alert(
+        'Login Failed',
+        nextProps.error,
+        [],
+        { cancelable: true }
+      )
+    }
   }
+
   render() {
     return (
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         <AppHeader />
         <Button
           title="Login With Twitter"
           onPress={this.props.loginWithTwitter} />
-      </ScrollView>
+      </View>
     )
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ login }) => {
+  const { response, error } = login;
+  const { credentials } = response;
   return {
+    accessToken: credentials.access_token,
+    error
   }
 }
 

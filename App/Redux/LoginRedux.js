@@ -5,7 +5,7 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   loginRequest: null,
-  loginSuccess: null,
+  loginSuccess: ['data'],
   loginFailure: ['error']
 })
 
@@ -15,24 +15,27 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  fetching: null,
-  error: ''
+  logingIn: null,
+  error: '',
+  response: {
+    credentials: {}
+  },
 })
 
 /* ------------- Reducers ------------- */
 
 // request the data from an api
 export const request = (state) =>
-  state.merge({ fetching: true })
+  state.merge({ logingIn: true })
 
 // successful api lookup
-export const success = (state, action) => {
-  return state.merge({ fetching: false })
+export const success = (state, { data }) => {
+  return state.merge({ logingIn: false, response: data.response })
 }
 
 // Something went wrong somewhere.
 export const failure = (state, { error }) => {
-  return state.merge({ fetching: false, error: error })
+  return state.merge({ logingIn: false, error: error })
 }
 
 /* ------------- Hookup Reducers To Types ------------- */
