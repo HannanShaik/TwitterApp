@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, Button } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
+import TweetActions from '../Redux/TweetRedux';
 
 // Styles
 import styles from './Styles/HomeScreenStyle'
@@ -13,12 +14,23 @@ class HomeScreen extends Component {
   //   this.state = {}
   // }
 
+  componentWillMount() {
+    this.props.fetchTimeline();
+  }
+
+  componentWillReceiveProps(nextProps) {
+
+  }
+
   render() {
     return (
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         <Text>HomeScreen Container</Text>
-        
-      </ScrollView>
+        <Button
+          title="Tweet"
+          onPress={() => this.props.tweet('This is a tweet from my app')}
+        />
+      </View>
     )
   }
 }
@@ -30,6 +42,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    tweet: (message) => dispatch(TweetActions.postTweet(message)),
+    fetchTimeline: (page) => dispatch(TweetActions.fetchTimeline())
   }
 }
 

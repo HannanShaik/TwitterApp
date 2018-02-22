@@ -23,21 +23,21 @@ const create = (baseURL = 'https://api.twitter.com/1.1') => {
   }
 
   const fetchTimeline = () => {
-    const timelineEndpoint = `${BASE_URL}/statuses/user_timeline.json`
+    const timelineEndpoint = `${baseURL}/statuses/home_timeline.json`
     return manager.makeRequest(TWITTER, timelineEndpoint)
   }
 
-  const tweet = (message) => {
-    const tweetEndpoint = `${BASE_URL}/statuses/update.json`
+  const postTweet = (message) => {
+    const tweetEndpoint = `${baseURL}/statuses/update.json?status=${encodeURI(message)}`
     return manager.makeRequest(TWITTER, tweetEndpoint, {
-      method: 'post',
-      params: { status: 'Testing Twitter Status Update' }
+      method: 'post'
     })
   }
 
   return {
     authorize,
-    fetchTimeline
+    fetchTimeline,
+    postTweet
   }
 }
 

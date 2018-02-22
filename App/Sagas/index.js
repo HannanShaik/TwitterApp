@@ -4,10 +4,12 @@ import API from '../Services/Api'
 /* ------------- Types ------------- */
 
 import { LoginTypes } from '../Redux/LoginRedux'
+import { TweetTypes } from '../Redux/TweetRedux'
 
 /* ------------- Sagas ------------- */
 
 import { authorize } from './LoginSagas'
+import { postTweet, fetchTimeline } from './TweetSagas'
 
 /* ------------- API ------------- */
 
@@ -21,5 +23,10 @@ export default function* root() {
   yield all([
     // some sagas only receive an action
     takeLatest(LoginTypes.LOGIN_REQUEST, authorize, api),
+
+    takeLatest(TweetTypes.POST_TWEET, postTweet, api),
+
+    takeLatest(TweetTypes.FETCH_TIMELINE, fetchTimeline, api),
+
   ])
 }
