@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 import TweetActions from '../Redux/TweetRedux';
+import TweetInput from '../Components/TweetInput';
 
 // Styles
 import styles from './Styles/HomeScreenStyle'
@@ -25,10 +26,7 @@ class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>HomeScreen Container</Text>
-        <Button
-          title="Tweet"
-          onPress={() => this.props.tweet('This is a tweet from my app')}
+        <TweetInput
         />
       </View>
     )

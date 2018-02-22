@@ -20,7 +20,9 @@ const PrimaryNav = StackNavigator({
     headerMode: 'screen',
     initialRouteName: 'SplashScreen',
     navigationOptions: {
-      headerStyle: styles.header
+      headerStyle: styles.header,
+      headerTitleStyle: styles.titleStyle,
+      headerTintColor: '#FFFFFF'
     }
   })
 

@@ -1,8 +1,13 @@
 import { StyleSheet } from 'react-native'
-import { Colors } from '../../Themes/'
+import { Colors, Metrics } from '../../Themes/'
 
 export default StyleSheet.create({
   header: {
-    backgroundColor: Colors.backgroundColor
+    backgroundColor: Colors.appHeaderColor
+  },
+  titleStyle: {
+    color: '#ffffff',
+    paddingLeft: 15,
+    fontSize: Metrics.textSize.large
   }
 })

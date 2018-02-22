@@ -1,6 +1,6 @@
 const colors = {
-  background: '#fff',
-  appHeaderColor: '#f2f2f2',
+  background: '#f2f2f2',
+  appHeaderColor: '#1DA1F2',
   appHeadertitleColor: '#e73536',
   clear: 'rgba(0,0,0,0)',
   facebook: '#3b5998',
