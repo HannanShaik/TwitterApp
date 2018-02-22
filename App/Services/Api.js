@@ -1,6 +1,8 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
 import OAuthManager from 'react-native-oauth'
+import queryString from 'query-string'
+
 // our "constructor"
 
 const TWITTER = 'twitter';
@@ -23,13 +25,38 @@ const create = (baseURL = 'https://api.twitter.com/1.1') => {
   }
 
   const fetchTimeline = () => {
-    const timelineEndpoint = `${baseURL}/statuses/home_timeline.json`
+    const params = {}
+    params.include_entities = false
+    params.exclude_replies = true
+    const queryParam = queryString.stringify(params);
+    const timelineEndpoint = `${baseURL}/statuses/home_timeline.json?${queryParam}`
     return manager.makeRequest(TWITTER, timelineEndpoint)
   }
 
   const postTweet = (message) => {
-    const tweetEndpoint = `${baseURL}/statuses/update.json?status=${encodeURI(message)}`
-    return manager.makeRequest(TWITTER, tweetEndpoint, {
+    const params = {}
+    params.status = message
+    const queryParam = queryString.stringify(params);
+    const tweetEndpoint = `${baseURL}/statuses/update.json?${queryParam}`
+    return manager.makeRequest(TWITTER, encodeURI(tweetEndpoint), {
+      method: 'post'
+    })
+  }
+
+  const retweet = (id) => {
+    const tweetEndpoint = `${baseURL}/statuses/retweet/${id}.json`
+    return manager.makeRequest(TWITTER, encodeURI(tweetEndpoint), {
+      method: 'post'
+    })
+  }
+
+  const markFavorite = (id) => {
+    const params = {}
+    params.id = id
+    params.include_entities = false
+    const queryParam = queryString.stringify(params);
+    const tweetEndpoint = `${baseURL}/favorites/create.json?${queryParam}`
+    return manager.makeRequest(TWITTER, encodeURI(tweetEndpoint), {
       method: 'post'
     })
   }
@@ -37,7 +64,9 @@ const create = (baseURL = 'https://api.twitter.com/1.1') => {
   return {
     authorize,
     fetchTimeline,
-    postTweet
+    postTweet,
+    retweet,
+    markFavorite
   }
 }
 
