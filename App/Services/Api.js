@@ -26,7 +26,7 @@ const create = (baseURL = 'https://api.twitter.com/1.1') => {
 
   const fetchTimeline = () => {
     const params = {}
-    params.include_entities = false
+    //params.include_entities = false
     params.exclude_replies = true
     const queryParam = queryString.stringify(params);
     const timelineEndpoint = `${baseURL}/statuses/home_timeline.json?${queryParam}`

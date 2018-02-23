@@ -9,7 +9,7 @@ import { TweetTypes } from '../Redux/TweetRedux'
 /* ------------- Sagas ------------- */
 
 import { authorize } from './LoginSagas'
-import { postTweet, fetchTimeline } from './TweetSagas'
+import { postTweet, fetchTimeline, doRetweet, markFavorite } from './TweetSagas'
 
 /* ------------- API ------------- */
 
@@ -27,6 +27,10 @@ export default function* root() {
     takeLatest(TweetTypes.POST_TWEET, postTweet, api),
 
     takeLatest(TweetTypes.FETCH_TIMELINE, fetchTimeline, api),
+
+    takeLatest(TweetTypes.DO_RETWEET, doRetweet, api),
+
+    takeLatest(TweetTypes.MARK_FAVORITE, markFavorite, api),
 
   ])
 }
