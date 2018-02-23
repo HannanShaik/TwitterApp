@@ -5,7 +5,6 @@ import styles from './Styles/AlertMessageStyles'
 
 export default class AlertMessage extends Component {
   static defaultProps = { show: true }
-
   static propTypes = {
     title: PropTypes.string,
     icon: PropTypes.string,
@@ -13,7 +12,13 @@ export default class AlertMessage extends Component {
     show: PropTypes.bool
   }
 
-  render () {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.show) {
+      setTimeout(() => this.props.onClose(), 2000);
+    }
+  }
+
+  render() {
     let messageComponent = null
     if (this.props.show) {
       const { title } = this.props
@@ -22,7 +27,7 @@ export default class AlertMessage extends Component {
           style={[styles.container, this.props.style]}
         >
           <View style={styles.contentContainer}>
-            <Text allowFontScaling={false} style={styles.message}>{title && title.toUpperCase()}</Text>
+            <Text allowFontScaling={false} style={styles.message}>{title}</Text>
           </View>
         </View>
       )
