@@ -9,7 +9,8 @@ export default StyleSheet.create({
     paddingRight: 10,
     borderBottomColor: "#d6d7da",
     borderBottomWidth: StyleSheet.hairlineWidth,
-    width: Dimensions.get("window").width
+    width: Dimensions.get("window").width,
+    backgroundColor: 'white'
   },
   tweetDetails: {
     flex: 1
@@ -39,6 +40,11 @@ export default StyleSheet.create({
     marginTop: 10,
     fontSize: 18,
     color: "#555",
+  },
+  tweetImage: {
+    marginTop: 10,
+    width: 300,
+    height: 200
   },
   tweetFooter: {
     marginTop: 10,
