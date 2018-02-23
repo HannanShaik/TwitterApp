@@ -36,6 +36,7 @@
     "react-native": "0.50.4",
     "react-native-config": "^0.10.0",
     "react-native-oauth": "git+ssh://git@github.com/exentrich/react-native-oauth#patch-1",
+    "react-native-swipe-list-view": "^1.0.6",
     "react-native-vector-icons": "4.3.0",
     "react-navigation": "1.0.0-beta.27",
     "react-redux": "^5.0.6",
