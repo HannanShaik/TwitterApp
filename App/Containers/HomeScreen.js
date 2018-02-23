@@ -3,6 +3,7 @@ import { View, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
 import TweetActions from '../Redux/TweetRedux';
 import TweetInput from '../Components/TweetInput';
+import TweetListItem from '../Components/TweetListItem';
 
 // Styles
 import styles from './Styles/HomeScreenStyle'
@@ -22,6 +23,7 @@ class HomeScreen extends Component {
       <View style={styles.container}>
         <TweetInput
           onSubmit={this.props.tweet} />
+        <TweetListItem />
       </View>
     )
   }
