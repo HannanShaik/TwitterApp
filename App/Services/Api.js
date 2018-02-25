@@ -1,5 +1,3 @@
-// a library to wrap and simplify api calls
-import apisauce from 'apisauce'
 import OAuthManager from 'react-native-oauth'
 import queryString from 'query-string'
 

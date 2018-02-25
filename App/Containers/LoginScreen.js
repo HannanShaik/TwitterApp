@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, Text, Button, AsyncStorage, Alert, NetInfo, Platform } from 'react-native'
-import AppHeader from '../Components/AppHeader'
 import { ACCESS_TOKEN } from '../Config/Constants';
 import { connect } from 'react-redux'
 import LoginActions from '../Redux/LoginRedux';

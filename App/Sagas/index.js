@@ -21,7 +21,6 @@ const api = API.create()
 
 export default function* root() {
   yield all([
-    // some sagas only receive an action
     takeLatest(LoginTypes.LOGIN_REQUEST, authorize, api),
 
     takeLatest(TweetTypes.POST_TWEET, postTweet, api),

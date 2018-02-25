@@ -3,7 +3,6 @@ import { View, Text, Button, TouchableOpacity, ListView, ActivityIndicator } fro
 import { connect } from 'react-redux'
 import { SwipeListView } from 'react-native-swipe-list-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import DrawerButton from '../Components/DrawerButton';
 import AlertMessage from '../Components/AlertMessage';
 import TweetActions from '../Redux/TweetRedux';
 import TweetInput from '../Components/TweetInput';
@@ -28,7 +27,7 @@ class HomeScreen extends Component {
   }
 
   componentWillMount() {
-    //this.props.fetchTimeline();
+    this.props.fetchTimeline();
   }
 
   componentWillReceiveProps(nextProps) {
