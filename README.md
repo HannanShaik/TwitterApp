@@ -5,9 +5,9 @@
 
 ## How to Setup
 
-**Step 1:** git clone this repo:
+**Step 1:** `git clone this repo: git@github.com:HannanShaik/TwitterApp.git`
 
-**Step 2:** cd to the cloned repo:
+**Step 2:** cd to the cloned repo: `cd TwitterApp`
 
 **Step 3:** Install the Application with `yarn` or `npm i`
 
@@ -31,6 +31,6 @@
 
 ## Library Used
 
-Twitter Login & API Calls -  [react-native-oauth](https://github.com/fullstackreact/react-native-oauth)
+Twitter Login & API access -  [react-native-oauth](https://github.com/fullstackreact/react-native-oauth)
 
 ## Contributor [Hannan Shaik](http://hannanshaik.com)
