@@ -32,7 +32,8 @@ const colors = {
   favoriteColor: '#f71f02',
   unselectedColor: '#333f33',
   borderColor: '#d6d7da',
-  defaultBackgroundColor: '#fff'
+  defaultBackgroundColor: '#fff',
+  appColor: '#1DA1F2',
 }
 
 export default colors
