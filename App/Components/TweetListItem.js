@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types';
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import styles from './Styles/TweetListItemStyle'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -40,10 +39,18 @@ export default class TweetListItem extends Component {
 
           {/* <View style={styles.lineSeperator} /> */}
           <View style={styles.tweetFooter}>
-            <Icon name="retweet" size={30} color={tweet.retweeted ? '#03960c' : '#333f33'} />
+            <TouchableOpacity
+              onPress={this.props.onRetweetPress}
+            >
+              <Icon name="retweet" size={30} color={tweet.retweeted ? '#03960c' : '#333f33'} />
+            </TouchableOpacity>
             <Text style={styles.badgeCount}>{tweet.retweet_count}</Text>
             <Text style={styles.separator}>|</Text>
-            <Icon name="star" size={30} color={tweet.favorited ? '#f71f02' : '#333f33'} />
+            <TouchableOpacity
+              onPress={this.props.onFavoritePress}
+            >
+              <Icon name="star" size={30} color={tweet.favorited ? '#f71f02' : '#333f33'} />
+            </TouchableOpacity>
             <Text style={styles.badgeCount}>{tweet.favorite_count}</Text>
           </View>
         </View>

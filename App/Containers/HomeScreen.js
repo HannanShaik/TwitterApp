@@ -20,24 +20,42 @@ class HomeScreen extends Component {
       error: false,
       showMessage: false
     }
-    this.renderHiddenRow = this.renderHiddenRow.bind(this);
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-
+    this.renderHiddenRow = this.renderHiddenRow.bind(this);
+    this.showMessage = this.showMessage.bind(this);
   }
+
   componentWillMount() {
     this.props.fetchTimeline();
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.error) {
-      this.setState({
-        errorMessage: nextProps.error.message,
-        error: true,
-        showMessage: true
-      })
+      this.showMessage(nextProps.error.message);
     } else if (nextProps.tweets.length > 0) {
       this.setState({ tweets: nextProps.tweets });
     }
+  }
+
+  doRetweet(tweet, row) {
+    row.closeRow()
+    if (!tweet.retweeted) {
+      this.props.doRetweet(tweet.id_str)
+    }
+  }
+
+  markFavorite(tweet, row) {
+    row.closeRow()
+    if (!tweet.favorited) {
+      this.props.markFavorite(tweet.id_str)
+    }
+  }
+
+  showMessage(message) {
+    this.setState({
+      errorMessage: message,
+      showMessage: true
+    })
   }
 
   renderHiddenRow(data, secId, rowId, rowMap) {
@@ -46,16 +64,13 @@ class HomeScreen extends Component {
       <View style={styles.hiddenRowStyle}>
         <TouchableOpacity
           style={[styles.hiddenButtonStyle, styles.retweet]}
-          onPress={() => {
-            rowMap[`${secId}${rowId}`].closeRow()
-            this.props.doRetweet(tweet.id_str)
-          }}
+          onPress={() => this.doRetweet(tweet, rowMap[`${secId}${rowId}`])}
         >
           <Icon name="retweet" size={30} color={tweet.retweeted ? '#03960c' : '#333f33'} />
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.hiddenButtonStyle, styles.favorite]}
-          onPress={() => this.props.markFavorite(tweet.id)}
+          onPress={() => this.markFavorite(tweet, rowMap[`${secId}${rowId}`])}
         >
           <Icon name="star" size={30} color={tweet.favorited ? '#f71f02' : '#333f33'} />
         </TouchableOpacity>
@@ -73,9 +88,12 @@ class HomeScreen extends Component {
           scrollEventThrottle={16}
           dataSource={this.ds.cloneWithRows(this.state.tweets)}
           renderRow={(data) => {
-            return (<TweetListItem
-              tweet={data}
-            />);
+            return (
+              <TweetListItem
+                tweet={data}
+                onRetweetPress={() => this.showMessage('Swipe left to ReTweet')}
+                onFavoritePress={() => this.showMessage('Swipe left to Mark Favorite')}
+              />);
           }
           }
           renderHiddenRow={this.renderHiddenRow}
@@ -89,7 +107,6 @@ class HomeScreen extends Component {
 
         <AlertMessage
           title={this.state.errorMessage}
-          type={this.state.error ? 'ERROR' : 'INFO'}
           show={this.state.showMessage}
           onClose={() => this.setState({ showMessage: false })}
         />

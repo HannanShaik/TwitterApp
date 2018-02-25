@@ -38,9 +38,8 @@ export function* postTweet(api, action) {
 export function* doRetweet(api, action) {
   const { id } = action
   const response = yield call(api.retweet, id)
-  console.log(response);
   if (response.status == 200) {
-    yield put(TweetActions.doRetweetSuccess(response))
+      yield put(TweetActions.doRetweetSuccess(response))
   } else {
     yield put(TweetActions.doRetweetFailure(response.data.errors[0]))
   }

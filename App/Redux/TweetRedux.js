@@ -26,7 +26,7 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   posting: false,
-  fetching: null,
+  fetching: false,
   error: null,
   tweets: []
 })
@@ -34,12 +34,10 @@ export const INITIAL_STATE = Immutable({
 /* ------------- Reducers ------------- */
 
 export const request = (state) =>
-  state.merge({ posting: true })
+  state.merge({ ...INITIAL_STATE, posting: true })
 
-export const postSuccess = (state, action) => {
-  const { response } = action
-  return state.merge({ posting: false, error: null, tweetPostResponse: response })
-}
+export const postSuccess = (state, { response }) =>
+  state.merge({ posting: false, error: null, tweetPostResponse: response })
 
 export const postFailure = (state, { error }) =>
   state.merge({ posting: false, error })
@@ -71,33 +69,44 @@ export const fetchTimelineSuccess = (state, { response }) => {
   return state.merge({ fetching: false, error: null, tweets })
 }
 
-// Something went wrong somewhere.
 export const fetchTimelineFailure = (state, { error }) =>
   state.merge({ fetching: false, error })
 
 export const doRetweet = (state, { id }) => {
   const tweets = JSON.parse(JSON.stringify(state.tweets))
   for (let tweet of tweets) {
-    if (tweet.id === id) {
+    if (tweet.id_str === id) {
       tweet.retweeted = true
       tweet.retweet_count++;
       break
     }
   }
-  return state.merge({ fetching: true, tweets })
+  return state.merge({ tweets, error: null })
 }
-export const doRetweetSuccess = (state) => {
-  return state.merge({ fetching: false, error: false })
-}
+
+export const doRetweetSuccess = state =>
+  state.merge({ error: null })
 
 export const doRetweetFailure = (state, { error }) =>
-  state.merge({ fetching: false, error, response: '' })
+  state.merge({ error })
+
+export const markFavorite = (state, { id }) => {
+  const tweets = JSON.parse(JSON.stringify(state.tweets))
+  for (let tweet of tweets) {
+    if (tweet.id_str === id) {
+      tweet.favorited = true
+      tweet.favorite_count++;
+      break
+    }
+  }
+  return state.merge({ tweets, error: null })
+}
 
 export const markFavoriteSuccess = (state, { response }) =>
-  state.merge({ fetching: false, error: false, response })
+  state.merge({ error: null })
 
 export const markFavoriteFailure = (state, { error }) =>
-  state.merge({ fetching: false, error, response: '' })
+  state.merge({ error })
 
 
 /* ------------- Hookup Reducers To Types ------------- */
@@ -112,7 +121,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.DO_RETWEET]: doRetweet,
   [Types.DO_RETWEET_SUCCESS]: doRetweetSuccess,
   [Types.DO_RETWEET_FAILURE]: doRetweetFailure,
-  [Types.MARK_FAVORITE]: request,
+  [Types.MARK_FAVORITE]: markFavorite,
   [Types.MARK_FAVORITE_SUCCESS]: markFavoriteSuccess,
   [Types.MARK_FAVORITE_FAILURE]: markFavoriteFailure,
 })
