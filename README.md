@@ -25,12 +25,14 @@
 * Login with Twitter
 * Fetch Home Timeline of logged in user
 * Post Status update on Twitter
-* Like or Mark any tweet as favorite)
-* ReTweet tweets
+* Like or Mark tweet as favorite
+* ReTweet a status tweet
 * Swipe Gesture for above actions
 
 ## Library Used
 
-Twitter Login & API access -  [react-native-oauth](https://github.com/fullstackreact/react-native-oauth)
+* Twitter Login & API access -  [react-native-oauth](https://github.com/fullstackreact/react-native-oauth)
+* Swipe Gesture - [react-native-swipe-list-view](https://github.com/jemise111/react-native-swipe-list-view)
+* Navigation - [react-navigation](https://github.com/react-navigation/react-navigation)
 
 ## Contributor [Hannan Shaik](http://hannanshaik.com)
