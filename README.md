@@ -29,6 +29,11 @@
 * ReTweet a status tweet
 * Swipe Gesture for above actions
 
+## Working Video
+
+iOS - [Click to watch](https://drive.google.com/open?id=1OBSskwz39n7E5MysOXmHPx4E6inD6x82) 
+Android - [Click to watch](https://drive.google.com/open?id=1SC6G7oq8IFNq0WtcesKPfMnoMGpesJ9d)
+
 ## Library Used
 
 * Twitter Login & API access -  [react-native-oauth](https://github.com/fullstackreact/react-native-oauth)
