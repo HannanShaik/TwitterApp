@@ -20,7 +20,7 @@ export function* fetchTimeline(api, action) {
   if (response.status == 200) {
     yield put(TweetActions.fetchTimelineSuccess(response.data))
   } else {
-    yield put(TweetActions.fetchTimelineFailure())
+    yield put(TweetActions.fetchTimelineFailure(response.data.errors[0]))
   }
 }
 
@@ -39,10 +39,7 @@ export function* doRetweet(api, action) {
   const { id } = action
   const response = yield call(api.retweet, id)
   console.log(response);
-  // success?
   if (response.status == 200) {
-    // You might need to change the response here - do this with a 'transform',
-    // located in ../Transforms/. Otherwise, just pass the data back from the api.
     yield put(TweetActions.doRetweetSuccess(response))
   } else {
     yield put(TweetActions.doRetweetFailure(response.data.errors[0]))

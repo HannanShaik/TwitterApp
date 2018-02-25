@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Button, TouchableOpacity } from 'react-native'
+import { View, Text, Button, TouchableOpacity, ListView } from 'react-native'
 import { connect } from 'react-redux'
 import { SwipeListView } from 'react-native-swipe-list-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -21,6 +21,8 @@ class HomeScreen extends Component {
       showMessage: false
     }
     this.renderHiddenRow = this.renderHiddenRow.bind(this);
+    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
   }
   componentWillMount() {
     this.props.fetchTimeline();
@@ -38,17 +40,16 @@ class HomeScreen extends Component {
     }
   }
 
-  renderHiddenRow(data, rowMap) {
-    const tweet = data.item;
+  renderHiddenRow(data, secId, rowId, rowMap) {
+    const tweet = data;
     return (
       <View style={styles.hiddenRowStyle}>
         <TouchableOpacity
           style={[styles.hiddenButtonStyle, styles.retweet]}
           onPress={() => {
-            this.props.doRetweet(tweet.id)
-            rowMap[data.item.key].closeRow()
-          }
-          }
+            rowMap[`${secId}${rowId}`].closeRow()
+            this.props.doRetweet(tweet.id_str)
+          }}
         >
           <Icon name="retweet" size={30} color={tweet.retweeted ? '#03960c' : '#333f33'} />
         </TouchableOpacity>
@@ -70,19 +71,20 @@ class HomeScreen extends Component {
         <SwipeListView
           style={{ flex: 1 }}
           scrollEventThrottle={16}
-          useFlatList
-          data={this.state.tweets}
-          renderItem={(data, rowMap) => (
-            <TweetListItem
-              tweet={data.item}
-            />
-          )}
-          renderHiddenItem={this.renderHiddenRow}
+          dataSource={this.ds.cloneWithRows(this.state.tweets)}
+          renderRow={(data) => {
+            return (<TweetListItem
+              tweet={data}
+            />);
+          }
+          }
+          renderHiddenRow={this.renderHiddenRow}
           rightOpenValue={-150}
           closeOnRowBeginSwipe
           disableRightSwipe
           previewOpenValue={-100}
           closeOnScroll
+          enableEmptySections
         />
 
         <AlertMessage

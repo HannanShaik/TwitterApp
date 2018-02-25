@@ -6,7 +6,7 @@ import _ from 'lodash'
 
 const { Types, Creators } = createActions({
   postTweet: ['data'],
-  postTweetSuccess: ['payload'],
+  postTweetSuccess: ['response'],
   postTweetFailure: null,
   fetchTimeline: null,
   fetchTimelineSuccess: ['response'],
@@ -25,35 +25,34 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  data: null,
+  posting: false,
   fetching: null,
-  payload: null,
   error: null,
   tweets: []
 })
 
 /* ------------- Reducers ------------- */
 
-// request the data from an api
-export const request = (state, { data }) =>
-  state.merge({ fetching: true, data, payload: null })
+export const request = (state) =>
+  state.merge({ posting: true })
 
-// successful api lookup
 export const postSuccess = (state, action) => {
-  const { payload } = action
-  return state.merge({ fetching: false, error: null, payload })
+  const { response } = action
+  return state.merge({ posting: false, error: null, tweetPostResponse: response })
 }
 
-// Something went wrong somewhere.
-export const postFailure = state =>
-  state.merge({ fetching: false, error: true, payload: null })
+export const postFailure = (state, { error }) =>
+  state.merge({ posting: false, error })
 
+export const fetchTimeline = (state) =>
+  state.merge({ fetching: true })
 
 export const fetchTimelineSuccess = (state, { response }) => {
   const tweets = [];
   for (let tweet of response) {
     tweet = _.pick(tweet, [
       'id',
+      'id_str',
       'text',
       'favorited',
       'retweeted',
@@ -73,22 +72,23 @@ export const fetchTimelineSuccess = (state, { response }) => {
 }
 
 // Something went wrong somewhere.
-export const fetchTimelineFailure = state =>
-  state.merge({ fetching: false, error: true, payload: null })
+export const fetchTimelineFailure = (state, { error }) =>
+  state.merge({ fetching: false, error })
 
 export const doRetweet = (state, { id }) => {
-  const { tweets } = state
+  const tweets = JSON.parse(JSON.stringify(state.tweets))
   for (let tweet of tweets) {
     if (tweet.id === id) {
       tweet.retweeted = true
+      tweet.retweet_count++;
       break
     }
   }
   return state.merge({ fetching: true, tweets })
 }
-
-export const doRetweetSuccess = (state, { response }) =>
-  state.merge({ fetching: false, error: false, response })
+export const doRetweetSuccess = (state) => {
+  return state.merge({ fetching: false, error: false })
+}
 
 export const doRetweetFailure = (state, { error }) =>
   state.merge({ fetching: false, error, response: '' })
@@ -106,7 +106,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.POST_TWEET]: request,
   [Types.POST_TWEET_SUCCESS]: postSuccess,
   [Types.POST_TWEET_FAILURE]: postFailure,
-  [Types.FETCH_TIMELINE]: request,
+  [Types.FETCH_TIMELINE]: fetchTimeline,
   [Types.FETCH_TIMELINE_SUCCESS]: fetchTimelineSuccess,
   [Types.FETCH_TIMELINE_FAILURE]: fetchTimelineFailure,
   [Types.DO_RETWEET]: doRetweet,
