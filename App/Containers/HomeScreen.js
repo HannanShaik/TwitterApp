@@ -19,7 +19,8 @@ class HomeScreen extends Component {
       tweets: [],
       error: false,
       showMessage: false,
-      loading: false
+      loading: false,
+      message: ''
     }
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.renderHiddenRow = this.renderHiddenRow.bind(this);
@@ -37,6 +38,7 @@ class HomeScreen extends Component {
       this.showMessage(nextProps.error.message);
     } else if (nextProps.posted) {
       this.showMessage('Your Status is posted successfully');
+      this.props.fetchTimeline();
     } else if (nextProps.tweets.length > 0) {
       this.setState({ loading: false, tweets: nextProps.tweets });
     }
@@ -58,7 +60,7 @@ class HomeScreen extends Component {
 
   showMessage(message) {
     this.setState({
-      errorMessage: message,
+      message: message,
       showMessage: true,
       loading: false
     })
@@ -95,7 +97,7 @@ class HomeScreen extends Component {
           onSubmit={this.props.postTweet} />
         {
           this.state.loading ?
-            <ActivityIndicator size="large" color={Colors.loaderColor} /> :
+            <ActivityIndicator style={styles.activityIndicator} size="large" color={Colors.loaderColor} /> :
             <SwipeListView
               style={{ flex: 1 }}
               scrollEventThrottle={16}
@@ -119,7 +121,7 @@ class HomeScreen extends Component {
             />
         }
         <AlertMessage
-          title={this.state.errorMessage}
+          title={this.state.message}
           show={this.state.showMessage}
           onClose={() => this.setState({ showMessage: false })}
         />

@@ -34,15 +34,7 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Reducers ------------- */
 
-export const request = (state) =>
-  state.merge({ ...INITIAL_STATE, posting: true })
-
-export const postSuccess = (state, { response }) =>
-  state.merge({ posting: false, error: null, posted: true })
-
-export const postFailure = (state, { error }) =>
-  state.merge({ posting: false, error })
-
+// Fetch User Timeline
 export const fetchTimeline = (state) =>
   state.merge({ ...INITIAL_STATE, fetching: true })
 
@@ -67,12 +59,23 @@ export const fetchTimelineSuccess = (state, { response }) => {
     ]);
     tweets.push(tweet);
   }
-  return state.merge({ fetching: false, error: null, tweets })
+  return state.merge({ fetching: false, error: null, tweets, posted: false })
 }
 
 export const fetchTimelineFailure = (state, { error }) =>
-  state.merge({ fetching: false, error })
+  state.merge({ ...INITIAL_STATE, error })
 
+// Post Tweet
+export const request = (state) =>
+  state.merge({ ...INITIAL_STATE, posting: true })
+
+export const postSuccess = (state, { response }) =>
+  state.merge({ posting: false, error: null, posted: true })
+
+export const postFailure = (state, { error }) =>
+  state.merge({ posting: false, error, posted: false })
+
+// Do a Retweet  
 export const doRetweet = (state, { id }) => {
   const tweets = JSON.parse(JSON.stringify(state.tweets))
   for (let tweet of tweets) {
@@ -82,15 +85,16 @@ export const doRetweet = (state, { id }) => {
       break
     }
   }
-  return state.merge({ tweets, error: null })
+  return state.merge({ tweets, error: null, posted: false })
 }
 
 export const doRetweetSuccess = state =>
-  state.merge({ error: null })
+  state.merge({ error: null, posted: false })
 
 export const doRetweetFailure = (state, { error }) =>
-  state.merge({ error })
+  state.merge({ error, posted: false })
 
+// Mark favorite
 export const markFavorite = (state, { id }) => {
   const tweets = JSON.parse(JSON.stringify(state.tweets))
   for (let tweet of tweets) {
@@ -100,14 +104,14 @@ export const markFavorite = (state, { id }) => {
       break
     }
   }
-  return state.merge({ tweets, error: null })
+  return state.merge({ tweets, error: null, posted: false })
 }
 
 export const markFavoriteSuccess = (state, { response }) =>
-  state.merge({ error: null })
+  state.merge({ error: null, posted: false })
 
 export const markFavoriteFailure = (state, { error }) =>
-  state.merge({ error })
+  state.merge({ error, posted: false })
 
 
 /* ------------- Hookup Reducers To Types ------------- */

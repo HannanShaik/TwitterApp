@@ -32,4 +32,9 @@ export default StyleSheet.create({
     right: 0,
     backgroundColor: '#62bdf7'
   },
+  activityIndicator: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 })
