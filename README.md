@@ -6,7 +6,6 @@
 ## Screenshot
 
 ![iOS](screenshot/iOS.png)
-
 ![Android](screenshot/Android.png)
 
 ## How to Setup
