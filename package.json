@@ -31,7 +31,7 @@
     "query-string": "^5.1.0",
     "react": "16.0.0",
     "react-native": "0.50.4",
-    "react-native-oauth": "git+ssh://git@github.com/hannanshaik/react-native-oauth.git#twitter-patch",
+    "rn-oauth": "2.1.16",
     "react-native-swipe-list-view": "^1.0.6",
     "react-native-vector-icons": "4.3.0",
     "react-navigation": "1.0.0-beta.27",

@@ -1,4 +1,4 @@
-import OAuthManager from 'react-native-oauth'
+import OAuthManager from 'rn-oauth'
 import queryString from 'query-string'
 
 // our "constructor"
