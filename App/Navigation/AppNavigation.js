@@ -7,7 +7,13 @@ import styles from './Styles/NavigationStyles'
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
-  HomeScreen: { screen: HomeScreen },
+  HomeScreen: {
+    screen: HomeScreen,
+    navigationOptions: {
+      title: 'Hannan\'s Twitter App',
+      headerLeft: null
+    }
+  },
   SplashScreen: {
     screen: SplashScreen,
     navigationOptions: {
