@@ -30,7 +30,9 @@ const colors = {
   hiddenRowBackgroundColor: '#81cbf9',
   retweetColor: '#03960c',
   favoriteColor: '#f71f02',
-  unselectedColor: '#333f33'
+  unselectedColor: '#333f33',
+  borderColor: '#d6d7da',
+  defaultBackgroundColor: '#fff'
 }
 
 export default colors

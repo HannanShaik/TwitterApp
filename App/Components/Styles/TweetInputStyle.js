@@ -1,4 +1,5 @@
-import { StyleSheet, Platform } from 'react-native'
+import { StyleSheet } from 'react-native'
+import { Colors } from '../../Themes'
 
 export default StyleSheet.create({
   container: {
@@ -7,10 +8,10 @@ export default StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 4,
     borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    marginLeft: 10,
-    marginRight: 10,
-    marginTop: (Platform.OS === 'ios') ? 10 : 0
+    borderColor: Colors.borderColor,
+    margin: 5,
+    padding: 10,
+    backgroundColor: Colors.defaultBackgroundColor
   },
   tweetAction: {
     alignItems: 'center',
