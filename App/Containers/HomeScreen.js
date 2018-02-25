@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Button, TouchableOpacity, ListView } from 'react-native'
+import { View, Text, Button, TouchableOpacity, ListView, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { SwipeListView } from 'react-native-swipe-list-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -8,6 +8,7 @@ import AlertMessage from '../Components/AlertMessage';
 import TweetActions from '../Redux/TweetRedux';
 import TweetInput from '../Components/TweetInput';
 import TweetListItem from '../Components/TweetListItem';
+import { Colors } from '../Themes/';
 
 // Styles
 import styles from './Styles/HomeScreenStyle'
@@ -18,7 +19,8 @@ class HomeScreen extends Component {
     this.state = {
       tweets: [],
       error: false,
-      showMessage: false
+      showMessage: false,
+      loading: false
     }
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.renderHiddenRow = this.renderHiddenRow.bind(this);
@@ -26,14 +28,16 @@ class HomeScreen extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchTimeline();
+    //this.props.fetchTimeline();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.error) {
+    if (nextProps.fetching) {
+      this.setState({ loading: true })
+    } else if (nextProps.error) {
       this.showMessage(nextProps.error.message);
     } else if (nextProps.tweets.length > 0) {
-      this.setState({ tweets: nextProps.tweets });
+      this.setState({ loading: false, tweets: nextProps.tweets });
     }
   }
 
@@ -54,7 +58,8 @@ class HomeScreen extends Component {
   showMessage(message) {
     this.setState({
       errorMessage: message,
-      showMessage: true
+      showMessage: true,
+      loading: false
     })
   }
 
@@ -66,13 +71,17 @@ class HomeScreen extends Component {
           style={[styles.hiddenButtonStyle, styles.retweet]}
           onPress={() => this.doRetweet(tweet, rowMap[`${secId}${rowId}`])}
         >
-          <Icon name="retweet" size={30} color={tweet.retweeted ? '#03960c' : '#333f33'} />
+          <Icon name="retweet" size={30} color={
+            tweet.retweeted ? Colors.retweetColor : Colors.unselectedColor
+          } />
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.hiddenButtonStyle, styles.favorite]}
           onPress={() => this.markFavorite(tweet, rowMap[`${secId}${rowId}`])}
         >
-          <Icon name="star" size={30} color={tweet.favorited ? '#f71f02' : '#333f33'} />
+          <Icon name="star" size={30} color={
+            tweet.favorited ? Colors.favoriteColor : Colors.unselectedColor
+          } />
         </TouchableOpacity>
       </View >
     );
@@ -83,28 +92,32 @@ class HomeScreen extends Component {
       <View style={styles.container}>
         <TweetInput
           onSubmit={this.props.tweet} />
-        <SwipeListView
-          style={{ flex: 1 }}
-          scrollEventThrottle={16}
-          dataSource={this.ds.cloneWithRows(this.state.tweets)}
-          renderRow={(data) => {
-            return (
-              <TweetListItem
-                tweet={data}
-                onRetweetPress={() => this.showMessage('Swipe left to ReTweet')}
-                onFavoritePress={() => this.showMessage('Swipe left to Mark Favorite')}
-              />);
-          }
-          }
-          renderHiddenRow={this.renderHiddenRow}
-          rightOpenValue={-150}
-          closeOnRowBeginSwipe
-          disableRightSwipe
-          previewOpenValue={-100}
-          closeOnScroll
-          enableEmptySections
-        />
 
+        {
+          this.state.loading ?
+            <ActivityIndicator size="large" color={Colors.loaderColor} /> :
+            <SwipeListView
+              style={{ flex: 1 }}
+              scrollEventThrottle={16}
+              dataSource={this.ds.cloneWithRows(this.state.tweets)}
+              renderRow={(data) => {
+                return (
+                  <TweetListItem
+                    tweet={data}
+                    onRetweetPress={() => this.showMessage('Swipe left to ReTweet')}
+                    onFavoritePress={() => this.showMessage('Swipe left to Mark Favorite')}
+                  />);
+              }
+              }
+              renderHiddenRow={this.renderHiddenRow}
+              rightOpenValue={-150}
+              closeOnRowBeginSwipe
+              disableRightSwipe
+              previewOpenValue={-100}
+              closeOnScroll
+              enableEmptySections
+            />
+        }
         <AlertMessage
           title={this.state.errorMessage}
           show={this.state.showMessage}
@@ -117,9 +130,9 @@ class HomeScreen extends Component {
 }
 
 const mapStateToProps = ({ tweet }) => {
-  const { tweets, error } = tweet;
+  const { tweets, error, fetching, posting } = tweet;
   return {
-    tweets, error
+    tweets, error, fetching
   }
 }
 

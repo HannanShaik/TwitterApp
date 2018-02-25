@@ -26,7 +26,11 @@ const colors = {
   text: '#E0D7E5',
   lightTextColor: '#fff',
   alertBackgroundColor: '#1DA1F2',
-  hiddenRowBackgroundColor: '#81cbf9'
+  loaderColor: '#1DA1F2',
+  hiddenRowBackgroundColor: '#81cbf9',
+  retweetColor: '#03960c',
+  favoriteColor: '#f71f02',
+  unselectedColor: '#333f33'
 }
 
 export default colors
