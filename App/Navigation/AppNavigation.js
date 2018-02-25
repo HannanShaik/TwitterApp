@@ -11,7 +11,6 @@ const PrimaryNav = StackNavigator({
     screen: HomeScreen,
     navigationOptions: {
       title: 'Hannan\'s Twitter App',
-      headerLeft: null
     }
   },
   SplashScreen: {
@@ -20,7 +19,12 @@ const PrimaryNav = StackNavigator({
       header: null
     }
   },
-  LoginScreen: { screen: LoginScreen },
+  LoginScreen: {
+    screen: LoginScreen,
+    navigationOptions: {
+      title: 'Hannan\'s Twitter App',
+    }
+  },
 }, {
     // Default config for all screens
     headerMode: 'screen',
@@ -28,7 +32,8 @@ const PrimaryNav = StackNavigator({
     navigationOptions: {
       headerStyle: styles.header,
       headerTitleStyle: styles.titleStyle,
-      headerTintColor: '#FFFFFF'
+      headerTintColor: '#FFFFFF',
+      headerLeft: null
     }
   })
 
