@@ -5,9 +5,9 @@ import _ from 'lodash'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  postTweet: ['data'],
+  postTweet: ['status'],
   postTweetSuccess: ['response'],
-  postTweetFailure: null,
+  postTweetFailure: ['error'],
   fetchTimeline: null,
   fetchTimelineSuccess: ['response'],
   fetchTimelineFailure: ['error'],
@@ -28,7 +28,8 @@ export const INITIAL_STATE = Immutable({
   posting: false,
   fetching: false,
   error: null,
-  tweets: []
+  tweets: [],
+  posted: false
 })
 
 /* ------------- Reducers ------------- */
@@ -37,13 +38,13 @@ export const request = (state) =>
   state.merge({ ...INITIAL_STATE, posting: true })
 
 export const postSuccess = (state, { response }) =>
-  state.merge({ posting: false, error: null, tweetPostResponse: response })
+  state.merge({ posting: false, error: null, posted: true })
 
 export const postFailure = (state, { error }) =>
   state.merge({ posting: false, error })
 
 export const fetchTimeline = (state) =>
-  state.merge({ fetching: true })
+  state.merge({ ...INITIAL_STATE, fetching: true })
 
 export const fetchTimelineSuccess = (state, { response }) => {
   const tweets = [];

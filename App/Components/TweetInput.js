@@ -30,7 +30,10 @@ export default class TweetInput extends Component {
           <Button
             style={styles.tweetButton}
             title="Tweet"
-            onPress={() => this.props.onSubmit(this.state.value)}
+            onPress={() => {
+              this.setState({ value: '' })
+              this.props.onSubmit(this.state.value)
+            }}
           />
         </View>
 

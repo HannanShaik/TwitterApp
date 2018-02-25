@@ -36,6 +36,8 @@ class HomeScreen extends Component {
       this.setState({ loading: true })
     } else if (nextProps.error) {
       this.showMessage(nextProps.error.message);
+    } else if (nextProps.posted) {
+      this.showMessage('Your Status is posted successfully');
     } else if (nextProps.tweets.length > 0) {
       this.setState({ loading: false, tweets: nextProps.tweets });
     }
@@ -91,8 +93,7 @@ class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         <TweetInput
-          onSubmit={this.props.tweet} />
-
+          onSubmit={this.props.postTweet} />
         {
           this.state.loading ?
             <ActivityIndicator size="large" color={Colors.loaderColor} /> :
@@ -123,22 +124,21 @@ class HomeScreen extends Component {
           show={this.state.showMessage}
           onClose={() => this.setState({ showMessage: false })}
         />
-
       </View>
     )
   }
 }
 
 const mapStateToProps = ({ tweet }) => {
-  const { tweets, error, fetching, posting } = tweet;
+  const { tweets, error, fetching, posting, posted } = tweet;
   return {
-    tweets, error, fetching
+    tweets, error, fetching, posted
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    tweet: (message) => dispatch(TweetActions.postTweet(message)),
+    postTweet: (message) => dispatch(TweetActions.postTweet(message)),
     fetchTimeline: (page) => dispatch(TweetActions.fetchTimeline()),
     doRetweet: (id) => dispatch(TweetActions.doRetweet(id)),
     markFavorite: (id) => dispatch(TweetActions.markFavorite(id))
