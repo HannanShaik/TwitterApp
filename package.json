@@ -24,17 +24,13 @@
     "git-hook": "npm run lint -s && npm run test -s"
   },
   "dependencies": {
-    "apisauce": "^0.14.2",
     "format-json": "^1.0.3",
     "identity-obj-proxy": "^3.0.0",
     "lodash": "^4.17.5",
     "prop-types": "^15.6.0",
     "query-string": "^5.1.0",
-    "querystringify": "1.0.0",
-    "ramda": "^0.25.0",
     "react": "16.0.0",
     "react-native": "0.50.4",
-    "react-native-config": "^0.10.0",
     "react-native-oauth": "git+ssh://git@github.com/hannanshaik/react-native-oauth.git#twitter-patch",
     "react-native-swipe-list-view": "^1.0.6",
     "react-native-vector-icons": "4.3.0",
