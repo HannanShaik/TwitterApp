@@ -3,11 +3,6 @@
 
 * Standard compliant React Native App Utilizing [Ignite](https://github.com/infinitered/ignite)
 
-## Screenshot
-
-![iOS](screenshot/iOS.png)
-![Android](screenshot/Android.png)
-
 ## How to Setup
 
 **Step 1:** `git clone this repo: git@github.com:HannanShaik/TwitterApp.git`
@@ -24,6 +19,11 @@
     * run `react-native run-ios`
   * for Android
     * run `react-native run-android`
+
+## Screenshot
+
+![iOS](screenshot/iOS.png)
+![Android](screenshot/Android.png)
 
 ## Features
 
