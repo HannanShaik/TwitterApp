@@ -9,8 +9,8 @@ const create = (baseURL = 'https://api.twitter.com/1.1') => {
 
   const config = {
     twitter: {
-      consumer_key: 'oNKtP1e5SkuJ8Gi4CFLtyQP2x',
-      consumer_secret: 'ZBl1K0e3jQksqaokb4zy6phNK5lNBcwgvyT948brD0IA3YAwbj'
+      consumer_key: '<KEY>',
+      consumer_secret: '<SECRET>'
     }
   }
 
